@@ -17,9 +17,9 @@ export default function Ques({
   const [correctAns] = useSound(correct);
   const [wrongAns] = useSound(wrong);
 
-//   useEffect(() => {
-//     letsPlay();
-//   }, [letsPlay]);
+  useEffect(() => {
+    letsPlay();
+  }, [letsPlay]);
 
   useEffect(() => {
     setQuestion(QuesData[questionNumber - 1]);
