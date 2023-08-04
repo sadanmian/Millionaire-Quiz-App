@@ -3,6 +3,7 @@ import "./app.css";
 import { MoneyPyramid } from "./Data";
 import { QuesData } from "./QuestionData";
 import Ques from "./components/Ques";
+import Timer from "./components/Timer";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -20,7 +21,9 @@ function App() {
         ) : (
           <>
             <div className="top">
-              <div className="timer">30</div>
+              <div className="timer">
+                <Timer setStop={setStop} questionNumber={questionNumber} />
+              </div>
             </div>
             <div className="bottom">
               <Ques
