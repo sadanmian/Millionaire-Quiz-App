@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function Ques() {
+export default function Ques({
+  QuesData,
+  setTimeOut,
+  questionNumber,
+  setQuestionNumber,
+}) {
+  const [question, setQuestion] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [className, setClassName] = useState("answer");
+
+  useEffect(() => {
+    setQuestion(QuesData[questionNumber - 1]);
+  }, [QuesData, questionNumber]);
+
+  const handleClick = (a) => {
+    setSelectedAnswer(a);
+    setClassName("answer active");
+  };
+
   return (
     <div className="ques">
-      <div className="question">Here is the question</div>
+      <div className="question">{question?.question}</div>
       <div className="answers">
-        <div className="answer correct">option 1</div>
-        <div className="answer wrong">option 2</div>
-        <div className="answer">option 3</div>
-        <div className="answer">option 4</div>
+        {question?.answers.map((a) => (
+          <div
+            className={selectedAnswer === a ? className : "answer"}
+            onClick={() => handleClick(a)}
+          >
+            {a.text}
+          </div>
+        ))}
       </div>
     </div>
   );
