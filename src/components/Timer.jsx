@@ -9,6 +9,7 @@ export default function Timer({ setStop, questionNumber }) {
     const interval = setInterval(() => {
       setTimer((prev) => prev - 1);
     }, 1000);
+    return () => clearInterval(interval);
   }, [setStop, timer]);
 
   useEffect(() => {
