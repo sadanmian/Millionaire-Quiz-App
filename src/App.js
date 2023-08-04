@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./app.css";
 import { MoneyPyramid } from "./Data";
 import { QuesData } from "./QuestionData";
@@ -6,21 +6,32 @@ import Ques from "./components/Ques";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [timeOut, setTimeOut] = useState(false);
+  const [stop, setStop] = useState(false);
+  const [earned, setEarned] = useState("₹ 0");
+  useEffect(() => {
+    questionNumber > 1 &&
+      setEarned(MoneyPyramid.find((m) => m.id === questionNumber - 1).amount);
+  }, [MoneyPyramid, questionNumber]);
   return (
     <div className="app">
       <div className="main">
-        <div className="top">
-          <div className="timer">30</div>
-        </div>
-        <div className="bottom">
-          <Ques
-            QuesData={QuesData}
-            setTimeOut={setTimeOut}
-            questionNumber={questionNumber}
-            setQuestionNumber={setQuestionNumber}
-          />
-        </div>
+        {stop ? (
+          <h1 className="endText">You Earned: {earned}</h1>
+        ) : (
+          <>
+            <div className="top">
+              <div className="timer">30</div>
+            </div>
+            <div className="bottom">
+              <Ques
+                QuesData={QuesData}
+                setStop={setStop}
+                questionNumber={questionNumber}
+                setQuestionNumber={setQuestionNumber}
+              />
+            </div>
+          </>
+        )}
       </div>
 
       <div className="pyramid">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 export default function Ques({
   QuesData,
-  setTimeOut,
+  setStop,
   questionNumber,
   setQuestionNumber,
 }) {
@@ -14,9 +14,26 @@ export default function Ques({
     setQuestion(QuesData[questionNumber - 1]);
   }, [QuesData, questionNumber]);
 
+  const delay = (duration, callBack) => {
+    setTimeout(() => {
+      callBack();
+    }, duration);
+  };
+
   const handleClick = (a) => {
     setSelectedAnswer(a);
     setClassName("answer active");
+    delay(1000, () =>
+      setClassName(a.correct ? "answer correct" : "answer wrong")
+    );
+    delay(4000, () => {
+      if (a.correct) {
+        setQuestionNumber((prev) => prev + 1);
+        setSelectedAnswer(null);
+      } else {
+        setStop(true);
+      }
+    });
   };
 
   return (
