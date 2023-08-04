@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import useSound from "use-sound";
+import play from "../assets/play.mp3";
+import wrong from "../assets/wrong.mp3";
+import correct from "../assets/correct.mp3";
 
 export default function Ques({
   QuesData,
@@ -9,6 +13,13 @@ export default function Ques({
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [className, setClassName] = useState("answer");
+  const [letsPlay] = useSound(play);
+  const [correctAns] = useSound(correct);
+  const [wrongAns] = useSound(wrong);
+
+  useEffect(() => {
+    letsPlay();
+  }, [letsPlay]);
 
   useEffect(() => {
     setQuestion(QuesData[questionNumber - 1]);
@@ -28,10 +39,16 @@ export default function Ques({
     );
     delay(4000, () => {
       if (a.correct) {
-        setQuestionNumber((prev) => prev + 1);
-        setSelectedAnswer(null);
+        correctAns();
+        delay(1000, () => {
+          setQuestionNumber((prev) => prev + 1);
+          setSelectedAnswer(null);
+        });
       } else {
-        setStop(true);
+        wrongAns();
+        delay(1000, () => {
+          setStop(true);
+        });
       }
     });
   };
