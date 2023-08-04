@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./app.css";
 import { MoneyPyramid } from "./Data";
+import Ques from "./components/Ques";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -10,7 +11,9 @@ function App() {
         <div className="top">
           <div className="timer">30</div>
         </div>
-        <div className="bottom">question and answers</div>
+        <div className="bottom">
+          <Ques />
+        </div>
       </div>
       <div className="pyramid">
         <ul className="moneyList">
